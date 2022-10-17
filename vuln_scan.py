@@ -43,13 +43,15 @@ def crawler():
    scraping.crawler(sys.argv[1], 'demofile.txt', '')
    waybackurls.domains(sys.argv[1],False)
   
-crawler()
+
 
 def printBanner1():
  cmd="figlet -w 100 'Vulnerability Scanner'"
  returned_value=os.system(cmd)
 
 printBanner1()
+
+crawler()
 
 def select(a):
 	
