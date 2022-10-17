@@ -31,7 +31,7 @@ def crawler(domain, ofile, mute):
         while len(new_urls):
 
             # move next url from the queue to the set of processed urls
-            url = new_urls.popleft()
+            url = new_urls.popleft()[0]
             url=url.replace('#/','')
             processed_urls.add(url)
             # get url's content
@@ -55,7 +55,7 @@ def crawler(domain, ofile, mute):
             path = url[:url.rfind('/')+1] if '/' in parts.path else url
 
             # create a beutiful soup for the html document
-            soup = BeautifulSoup(response.text, "lxml")
+            soup = BeautifulSoup(response.text)
 
             for link in soup.find_all('a'):
                 # extract link url from the anchor
@@ -63,21 +63,21 @@ def crawler(domain, ofile, mute):
 
                 if anchor.startswith('/'):
                     local_link = base_url + anchor
-                    local_link=local_link.replace('#/','')
+                    #local_link=local_link.replace('#/','')
                     local_urls.add(local_link)
                 elif strip_base in anchor:
-                    local_urls=local_urls.replace('#/','')
+                    #local_urls=local_urls.replace('#/','')
                     local_urls.add(anchor)
                 elif not anchor.startswith('http'):
                     local_link = path + anchor
-                    local_link=local_link.replace('#/','')
+                    #local_link=local_link.replace('#/','')
                     local_urls.add(local_link)
                 else:
                     foreign_urls.add(anchor)
 
             for i in local_urls:
                 if not i in new_urls and not i in processed_urls:
-                    i=i.replace('#/','')
+                    #i=i.replace('#/','')
                     new_urls.append(i)
 
         print()
@@ -132,7 +132,7 @@ def limit_crawler(domain, ofile, limit, mute):
             path = url[:url.rfind('/')+1] if '/' in parts.path else url
 
             # create a beutiful soup for the html document
-            soup = BeautifulSoup(response.text, "lxml")
+            soup = BeautifulSoup(response.text)
 
             for link in soup.find_all('a'):
                 # extract link url from the anchor
